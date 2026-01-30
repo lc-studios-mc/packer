@@ -4,6 +4,9 @@
 	"private": true,
 	"license": "0BSD",
 	"type": "module",
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"format": "prettier --write ."
 	},
