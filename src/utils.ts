@@ -6,4 +6,4 @@ export const asArray = <T>(input: T | T[] | undefined | null): T[] => {
 	return [input] as T[];
 };
 
-export const normalizePath = (p: string) => p.split(path.sep).join("/");
+export const toPosixPath = (p: string) => p.split(path.sep).join("/");
