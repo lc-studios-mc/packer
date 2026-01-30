@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"paths": {
 			"@/*": ["./src/*"],
-			"@test/*": ["./test/*"]
+			"@tests/*": ["./tests/*"]
 		},
 		"target": "es2024",
 		"lib": ["es2024"],
