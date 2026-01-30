@@ -21,9 +21,6 @@ export const build = async (
 
 	const logger = createConsola({
 		level: logLevel,
-		defaults: {
-			tag: "run",
-		},
 	});
 
 	logger.info("@lc-studios-mc/packer", packageConfig.version);
@@ -48,7 +45,7 @@ export const build = async (
 
 		const session = new Session({
 			buildConfig: resolvedConfig,
-			logger: logger.withTag("session"),
+			logger: logger,
 			signal: sessionSignal,
 		});
 
