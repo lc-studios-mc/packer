@@ -11,6 +11,8 @@
 		".": "./dist/index.js"
 	},
 	"scripts": {
+		"build": "tsup",
+		"build:watch": "tsup --watch",
 		"format": "prettier --write ."
 	},
 	"dependencies": {
