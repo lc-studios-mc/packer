@@ -19,7 +19,8 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"fs-extra": "^11.3.3"
+		"fs-extra": "^11.3.3",
+		"picomatch": "^4.0.3"
 	},
 	"devDependencies": {
 		"@types/fs-extra": "^11.0.4",
