@@ -7,6 +7,9 @@
 	"files": [
 		"dist"
 	],
+	"exports": {
+		".": "./dist/index.js"
+	},
 	"scripts": {
 		"format": "prettier --write ."
 	},
