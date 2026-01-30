@@ -7,6 +7,9 @@
 	"scripts": {
 		"format": "prettier --write ."
 	},
+	"dependencies": {
+		"fs-extra": "^11.3.3"
+	},
 	"devDependencies": {
 		"@types/node": "^24.10.9",
 		"prettier": "^3.8.1",
