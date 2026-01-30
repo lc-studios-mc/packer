@@ -1,5 +1,6 @@
 // Public exports
 
+export { build, type BuildOptions } from "./build";
 export {
 	PackTargetMode,
 	type BuildConfig,
@@ -7,4 +8,3 @@ export {
 	type PackLayer,
 	type PackTarget,
 } from "./config";
-export { build, type BuildOptions } from "./entry";

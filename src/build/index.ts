@@ -1,5 +1,5 @@
+import { resolveBuildConfig, type BuildConfig } from "@/config";
 import { createConsola, type LogLevel } from "consola";
-import { resolveBuildConfig, type BuildConfig } from "./config";
 
 export type BuildOptions = {
 	logLevel?: LogLevel;
