@@ -1,6 +1,6 @@
 type OneOrMore<T> = T | T[];
 
-export type PackLayers = {
+export type PackLayer = {
 	dir: string;
 	include?: OneOrMore<string>;
 	exclude?: OneOrMore<string>;
@@ -8,16 +8,18 @@ export type PackLayers = {
 
 export type PackTargetMode = "copy" | "link";
 
-export type PackTarget = {
-	dest: string;
-	/** @default "link" */
-	mode?: PackTargetMode;
-};
+export type PackTarget =
+	| string
+	| {
+			dest: string;
+			/** @default "link" */
+			mode?: PackTargetMode;
+	  };
 
 export type PackConfig = {
 	outDir: string;
-	layers?: OneOrMore<PackLayers>;
-	targets?: OneOrMore<string | PackTarget>;
+	layers?: OneOrMore<PackLayer>;
+	targets?: OneOrMore<PackTarget>;
 };
 
 export type BuildConfig = {
