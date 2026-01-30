@@ -2,6 +2,7 @@
 	"name": "@lc-studios-mc/packer",
 	"version": "0.0.0",
 	"private": true,
+	"license": "0BSD",
 	"type": "module",
 	"scripts": {
 		"format": "prettier --write ."
