@@ -7,3 +7,7 @@ export const asArray = <T>(input: T | T[] | undefined | null): T[] => {
 };
 
 export const toPosixPath = (p: string) => p.split(path.sep).join("/");
+
+export const isAbortError = (error: unknown): error is Error => {
+	return error instanceof Error && error.name === "AbortError";
+};
