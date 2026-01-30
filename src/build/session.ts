@@ -110,7 +110,7 @@ export class Session {
 			// TODO: Run actual build
 			this._currentBuildPromise = executeBuild({
 				buildConfig: this.ctx.buildConfig,
-				logger: this.ctx.logger,
+				logger: this.ctx.logger.withTag("build"),
 				signal: buildController.signal,
 			});
 
