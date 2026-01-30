@@ -6,7 +6,11 @@ export type PackLayer = {
 	exclude?: OneOrMore<string>;
 };
 
-export type PackTargetMode = "copy" | "link";
+export const PackTargetMode = {
+	Copy: "copy",
+	Link: "link",
+} as const;
+export type PackTargetMode = (typeof PackTargetMode)[keyof typeof PackTargetMode];
 
 export type PackTarget =
 	| string
