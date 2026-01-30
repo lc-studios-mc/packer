@@ -1,0 +1,16 @@
+{
+	"files.eol": "\n",
+	"search.exclude": {
+		"**/node_modules": true,
+		"dist": true
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"editor.insertSpaces": false,
+	"editor.rulers": [100],
+	"npm.packageManager": "pnpm",
+	"[markdown]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2
+	}
+}
