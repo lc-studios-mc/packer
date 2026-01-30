@@ -2,6 +2,7 @@ import type { ResolvedBuildConfig } from "@/config";
 import { isAbortError } from "@/utils";
 import { type ConsolaInstance } from "consola";
 import EventEmitter from "node:events";
+import { executeBuild } from "./execution";
 
 export type SessionContext = {
 	buildConfig: ResolvedBuildConfig;
@@ -107,7 +108,11 @@ export class Session {
 			const startTime = performance.now();
 
 			// TODO: Run actual build
-			this._currentBuildPromise = Promise.resolve();
+			this._currentBuildPromise = executeBuild({
+				buildConfig: this.ctx.buildConfig,
+				logger: this.ctx.logger,
+				signal: buildController.signal,
+			});
 
 			await this._currentBuildPromise;
 
