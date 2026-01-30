@@ -1,4 +1,4 @@
-import type { PackLayer } from "./types";
+import type { PackLayer } from "./config";
 
 export const EntrySourceKind = {
 	Buffer: "buffer",
