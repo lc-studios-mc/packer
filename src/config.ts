@@ -24,6 +24,7 @@ export type PackTarget =
 
 export type PackConfig = {
 	outDir: string;
+	name?: string;
 	layers?: OneOrMore<PackLayer>;
 	targets?: OneOrMore<PackTarget>;
 };
@@ -45,6 +46,7 @@ export type ResolvedPackTarget = {
 
 export type ResolvedPackConfig = {
 	outDir: string;
+	name: string;
 	layers: ResolvedPackLayer[];
 	targets: ResolvedPackTarget[];
 };
@@ -76,8 +78,10 @@ const resolvePackLayer = (layer: PackLayer): ResolvedPackLayer => {
 };
 
 const resolvePackConfig = (pack: PackConfig): ResolvedPackConfig => {
+	const outDir = path.resolve(pack.outDir);
 	return {
-		outDir: path.resolve(pack.outDir),
+		outDir,
+		name: pack.name ?? path.basename(outDir),
 		layers: asArray(pack.layers).map(resolvePackLayer),
 		targets: asArray(pack.targets).map(resolvePackTarget),
 	};
