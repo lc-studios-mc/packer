@@ -32,6 +32,7 @@ export type PackConfig = {
 
 export type BuildConfig = {
 	packs?: OneOrMore<PackConfig>;
+	archives?: OneOrMore<string>;
 };
 
 export type ResolvedPackLayer = {
@@ -55,6 +56,7 @@ export type ResolvedPackConfig = {
 
 export type ResolvedBuildConfig = {
 	packs: ResolvedPackConfig[];
+	archives: string[];
 };
 
 const resolvePackTarget = (target: PackTarget): ResolvedPackTarget => {
@@ -100,5 +102,6 @@ const resolvePackConfig = (pack: PackConfig): ResolvedPackConfig => {
 export const resolveBuildConfig = (config: BuildConfig): ResolvedBuildConfig => {
 	return {
 		packs: asArray(config.packs).map(resolvePackConfig),
+		archives: asArray(config.archives).map((p) => path.resolve(p)),
 	};
 };
