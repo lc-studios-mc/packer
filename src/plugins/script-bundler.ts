@@ -1,5 +1,5 @@
 import type { PackPlugin } from "@/config";
-import { isFileUrl } from "@/utils";
+import { isFileUrl, toPosixPath } from "@/utils";
 import esbuild from "esbuild";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -9,6 +9,7 @@ export type ScriptBundlerOptions = {
 	tsconfig?: string;
 	minify?: boolean;
 	sourceMap?: boolean;
+	esbuildOptions?: esbuild.BuildOptions;
 };
 
 export const createScriptBundlerPlugin = (options: ScriptBundlerOptions): PackPlugin => ({
@@ -39,6 +40,13 @@ export const createScriptBundlerPlugin = (options: ScriptBundlerOptions): PackPl
 			};
 		}
 
+		if (options.esbuildOptions !== undefined) {
+			bundleOptions = {
+				...bundleOptions,
+				...options.esbuildOptions,
+			};
+		}
+
 		const buildResult = await esbuild.build(bundleOptions);
 
 		for (const outputFile of buildResult.outputFiles ?? []) {
@@ -59,7 +67,7 @@ export const createScriptBundlerPlugin = (options: ScriptBundlerOptions): PackPl
 				content = outputFile.text;
 			}
 
-			const destPath = path.relative(packConfig.outDir, outputFile.path).split(path.sep).join("/");
+			const destPath = toPosixPath(path.relative(packConfig.outDir, outputFile.path));
 
 			blueprint.get(destPath).push({
 				kind: "buffer",
