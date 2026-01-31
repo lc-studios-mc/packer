@@ -1,4 +1,5 @@
 import path from "node:path";
+import type { Blueprint } from "./blueprint";
 import type { OneOrMore } from "./types";
 import { asArray } from "./utils";
 
@@ -23,11 +24,27 @@ export type PackTarget =
 			mode?: PackTargetMode;
 	  };
 
+export type PackModifierArgs = {
+	blueprint: Blueprint;
+	packConfig: ResolvedPackConfig;
+	signal: AbortSignal;
+};
+
+export type PackModifierFunction = (args: PackModifierArgs) => void | Promise<void>;
+
+export type PackModifier =
+	| PackModifierFunction
+	| {
+			apply: PackModifierFunction;
+			name?: string;
+	  };
+
 export type PackConfig = {
 	outDir: string;
 	name?: string;
 	layers?: OneOrMore<PackLayer>;
 	targets?: OneOrMore<PackTarget>;
+	modifiers?: OneOrMore<PackModifier>;
 };
 
 export type BuildConfig = {
@@ -47,11 +64,17 @@ export type ResolvedPackTarget = {
 	mode: PackTargetMode;
 };
 
+export type ResolvedPackModifier = {
+	name: string;
+	apply: PackModifierFunction;
+};
+
 export type ResolvedPackConfig = {
 	outDir: string;
 	name: string;
 	layers: ResolvedPackLayer[];
 	targets: ResolvedPackTarget[];
+	modifiers: ResolvedPackModifier[];
 };
 
 export type ResolvedBuildConfig = {
@@ -89,6 +112,20 @@ const resolvePackLayer = (layer: PackLayer, index: number): ResolvedPackLayer =>
 	};
 };
 
+const resolvePackModifier = (modifier: PackModifier, index: number): ResolvedPackModifier => {
+	if (typeof modifier === "function") {
+		return {
+			name: index.toString(),
+			apply: modifier,
+		};
+	} else {
+		return {
+			name: modifier.name ?? index.toString(),
+			apply: modifier.apply,
+		};
+	}
+};
+
 const resolvePackConfig = (pack: PackConfig): ResolvedPackConfig => {
 	const outDir = path.resolve(pack.outDir);
 	return {
@@ -96,6 +133,7 @@ const resolvePackConfig = (pack: PackConfig): ResolvedPackConfig => {
 		name: pack.name ?? path.basename(outDir),
 		layers: asArray(pack.layers).map(resolvePackLayer),
 		targets: asArray(pack.targets).map(resolvePackTarget),
+		modifiers: asArray(pack.modifiers).map(resolvePackModifier),
 	};
 };
 
