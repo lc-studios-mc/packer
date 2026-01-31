@@ -1,7 +1,7 @@
 import { Blueprint } from "@/blueprint";
 import { PackTargetMode, type ResolvedBuildConfig, type ResolvedPackConfig } from "@/config";
 import { EntrySourceKind, type EntrySource } from "@/entry-source";
-import { toPosixPath } from "@/utils";
+import { isAbortError, toPosixPath } from "@/utils";
 import type { ConsolaInstance } from "consola";
 import fs from "fs-extra";
 import { glob } from "glob";
@@ -104,6 +104,30 @@ const scanLayers = async (ctx: BuildPackContext, blueprint: Blueprint): Promise<
 	ctx.logger.debug(`Scanned total ${scannedEntryCount} entries from ${layers.length} pack layers`);
 };
 
+const applyModifiers = async (ctx: BuildPackContext, blueprint: Blueprint): Promise<void> => {
+	for (const modifier of ctx.packConfig.modifiers) {
+		ctx.signal.throwIfAborted();
+
+		try {
+			await modifier.apply({
+				blueprint,
+				packConfig: ctx.packConfig,
+				signal: ctx.signal,
+			});
+
+			ctx.logger.debug(`Applied modifier '${modifier.name}'`);
+		} catch (error) {
+			if (isAbortError(error)) {
+				throw error;
+			} else {
+				throw new Error(`Failed to apply modifier '${modifier.name}'`, {
+					cause: error,
+				});
+			}
+		}
+	}
+};
+
 const executeBlueprintEntry = async (
 	absDestPath: string,
 	sources: EntrySource[],
@@ -168,6 +192,7 @@ export const buildPack = async (ctx: BuildPackContext): Promise<void> => {
 
 	const blueprint = new Blueprint();
 	await scanLayers(ctx, blueprint);
+	await applyModifiers(ctx, blueprint);
 	await executeBlueprint(ctx, blueprint);
 
 	await populateTargets(ctx);
