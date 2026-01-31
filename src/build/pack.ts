@@ -135,10 +135,10 @@ const executeBlueprintEntry = async (
 	const source = sources[sources.length - 1]; // Last one wins
 	if (!source) return;
 
-	if (source.kind === "file") {
+	if (source.kind === EntrySourceKind.File) {
 		await fs.ensureDir(path.dirname(absDestPath));
 		await fs.copy(source.path, absDestPath);
-	} else if (source.kind === "buffer") {
+	} else if (source.kind === EntrySourceKind.Buffer) {
 		await fs.outputFile(absDestPath, source.content, { encoding: source.encoding });
 	}
 };
