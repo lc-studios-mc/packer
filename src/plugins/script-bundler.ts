@@ -1,4 +1,4 @@
-import type { PackModifier } from "@/config";
+import type { PackPlugin } from "@/config";
 import { isFileUrl } from "@/utils";
 import esbuild from "esbuild";
 import path from "node:path";
@@ -11,7 +11,7 @@ export type ScriptBundlerOptions = {
 	sourceMap?: boolean;
 };
 
-export const createScriptBundlerModifier = (options: ScriptBundlerOptions): PackModifier => ({
+export const createScriptBundlerPlugin = (options: ScriptBundlerOptions): PackPlugin => ({
 	name: "script-bundler",
 	apply: async ({ blueprint, packConfig }) => {
 		const entry = path.resolve(options.entry);

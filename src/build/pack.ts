@@ -104,23 +104,23 @@ const scanLayers = async (ctx: BuildPackContext, blueprint: Blueprint): Promise<
 	ctx.logger.debug(`Scanned total ${scannedEntryCount} entries from ${layers.length} pack layers`);
 };
 
-const applyModifiers = async (ctx: BuildPackContext, blueprint: Blueprint): Promise<void> => {
-	for (const modifier of ctx.packConfig.modifiers) {
+const applyPlugins = async (ctx: BuildPackContext, blueprint: Blueprint): Promise<void> => {
+	for (const plugin of ctx.packConfig.plugins) {
 		ctx.signal.throwIfAborted();
 
 		try {
-			await modifier.apply({
+			await plugin.apply({
 				blueprint,
 				packConfig: ctx.packConfig,
 				signal: ctx.signal,
 			});
 
-			ctx.logger.debug(`Applied modifier '${modifier.name}'`);
+			ctx.logger.debug(`Applied plugin '${plugin.name}'`);
 		} catch (error) {
 			if (isAbortError(error)) {
 				throw error;
 			} else {
-				throw new Error(`Failed to apply modifier '${modifier.name}'`, {
+				throw new Error(`Failed to apply plugin '${plugin.name}'`, {
 					cause: error,
 				});
 			}
@@ -194,7 +194,7 @@ export const buildPack = async (ctx: BuildPackContext): Promise<void> => {
 
 	const blueprint = new Blueprint();
 	await scanLayers(ctx, blueprint);
-	await applyModifiers(ctx, blueprint);
+	await applyPlugins(ctx, blueprint);
 	await executeBlueprint(ctx, blueprint);
 
 	await populateTargets(ctx);

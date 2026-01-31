@@ -24,18 +24,18 @@ export type PackTarget =
 			mode?: PackTargetMode;
 	  };
 
-export type PackModifierArgs = {
+export type PackPluginArgs = {
 	blueprint: Blueprint;
 	packConfig: ResolvedPackConfig;
 	signal: AbortSignal;
 };
 
-export type PackModifierFunction = (args: PackModifierArgs) => void | Promise<void>;
+export type PackPluginFunction = (args: PackPluginArgs) => void | Promise<void>;
 
-export type PackModifier =
-	| PackModifierFunction
+export type PackPlugin =
+	| PackPluginFunction
 	| {
-			apply: PackModifierFunction;
+			apply: PackPluginFunction;
 			name?: string;
 	  };
 
@@ -44,7 +44,7 @@ export type PackConfig = {
 	name?: string;
 	layers?: OneOrMore<PackLayer>;
 	targets?: OneOrMore<PackTarget>;
-	modifiers?: OneOrMore<PackModifier>;
+	plugins?: OneOrMore<PackPlugin>;
 };
 
 export type BuildConfig = {
@@ -64,9 +64,9 @@ export type ResolvedPackTarget = {
 	mode: PackTargetMode;
 };
 
-export type ResolvedPackModifier = {
+export type ResolvedPackPlugin = {
 	name: string;
-	apply: PackModifierFunction;
+	apply: PackPluginFunction;
 };
 
 export type ResolvedPackConfig = {
@@ -74,7 +74,7 @@ export type ResolvedPackConfig = {
 	name: string;
 	layers: ResolvedPackLayer[];
 	targets: ResolvedPackTarget[];
-	modifiers: ResolvedPackModifier[];
+	plugins: ResolvedPackPlugin[];
 };
 
 export type ResolvedBuildConfig = {
@@ -112,16 +112,16 @@ const resolvePackLayer = (layer: PackLayer, index: number): ResolvedPackLayer =>
 	};
 };
 
-const resolvePackModifier = (modifier: PackModifier, index: number): ResolvedPackModifier => {
-	if (typeof modifier === "function") {
+const resolvePackPlugin = (plugin: PackPlugin, index: number): ResolvedPackPlugin => {
+	if (typeof plugin === "function") {
 		return {
 			name: index.toString(),
-			apply: modifier,
+			apply: plugin,
 		};
 	} else {
 		return {
-			name: modifier.name ?? index.toString(),
-			apply: modifier.apply,
+			name: plugin.name ?? index.toString(),
+			apply: plugin.apply,
 		};
 	}
 };
@@ -133,7 +133,7 @@ const resolvePackConfig = (pack: PackConfig): ResolvedPackConfig => {
 		name: pack.name ?? path.basename(outDir),
 		layers: asArray(pack.layers).map(resolvePackLayer),
 		targets: asArray(pack.targets).map(resolvePackTarget),
-		modifiers: asArray(pack.modifiers).map(resolvePackModifier),
+		plugins: asArray(pack.plugins).map(resolvePackPlugin),
 	};
 };
 

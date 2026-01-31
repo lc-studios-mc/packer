@@ -7,10 +7,10 @@ export {
 	type BuildConfig,
 	type PackConfig,
 	type PackLayer,
-	type PackModifier,
-	type PackModifierArgs,
-	type PackModifierFunction,
+	type PackPlugin,
+	type PackPluginArgs,
+	type PackPluginFunction,
 	type PackTarget,
 } from "./config";
 export { EntrySourceKind, type EntrySource } from "./entry-source";
-export * as modifiers from "./modifier";
+export * as plugins from "./plugins";
