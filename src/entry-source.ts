@@ -8,6 +8,6 @@ export const EntrySourceKind = {
 export type EntrySourceKind = (typeof EntrySourceKind)[keyof typeof EntrySourceKind];
 
 export type EntrySource =
-	| { kind: typeof EntrySourceKind.Buffer; buffer: Buffer }
+	| { kind: typeof EntrySourceKind.Buffer; buffer: Buffer; encoding?: BufferEncoding }
 	| { kind: typeof EntrySourceKind.File; path: string; packLayer?: ResolvedPackLayer }
-	| { kind: typeof EntrySourceKind.Object; object: object };
+	| { kind: typeof EntrySourceKind.Object; object: object; encoding?: BufferEncoding };
