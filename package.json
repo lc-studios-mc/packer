@@ -19,6 +19,7 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
+		"archiver": "^7.0.1",
 		"consola": "^3.4.2",
 		"fs-extra": "^11.3.3",
 		"glob": "^13.0.0",
