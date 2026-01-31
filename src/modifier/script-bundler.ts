@@ -63,7 +63,7 @@ export const createScriptBundlerModifier = (options: ScriptBundlerOptions): Pack
 
 			blueprint.get(destPath).push({
 				kind: "buffer",
-				buffer: content,
+				content,
 				encoding: "utf8",
 			});
 		}

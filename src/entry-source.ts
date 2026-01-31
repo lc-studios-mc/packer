@@ -7,5 +7,5 @@ export const EntrySourceKind = {
 export type EntrySourceKind = (typeof EntrySourceKind)[keyof typeof EntrySourceKind];
 
 export type EntrySource =
-	| { kind: typeof EntrySourceKind.Buffer; buffer: string | Buffer; encoding?: BufferEncoding }
+	| { kind: typeof EntrySourceKind.Buffer; content: string | Buffer; encoding?: BufferEncoding }
 	| { kind: typeof EntrySourceKind.File; path: string; packLayer?: ResolvedPackLayer };

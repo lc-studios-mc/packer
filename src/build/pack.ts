@@ -139,7 +139,7 @@ const executeBlueprintEntry = async (
 		await fs.ensureDir(path.dirname(absDestPath));
 		await fs.copy(source.path, absDestPath);
 	} else if (source.kind === "buffer") {
-		await fs.outputFile(absDestPath, source.buffer, { encoding: source.encoding });
+		await fs.outputFile(absDestPath, source.content, { encoding: source.encoding });
 	}
 };
 
