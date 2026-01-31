@@ -4,6 +4,7 @@ import { asArray } from "./utils";
 
 export type PackLayer = {
 	dir: string;
+	name?: string;
 	include?: OneOrMore<string>;
 	exclude?: OneOrMore<string>;
 };
@@ -35,6 +36,7 @@ export type BuildConfig = {
 
 export type ResolvedPackLayer = {
 	dir: string;
+	name: string;
 	include: string[];
 	exclude: string[];
 };
@@ -69,13 +71,17 @@ const resolvePackTarget = (target: PackTarget): ResolvedPackTarget => {
 	}
 };
 
-const resolvePackLayer = (layer: PackLayer): ResolvedPackLayer => {
+const resolvePackLayer = (layer: PackLayer, index: number): ResolvedPackLayer => {
+	const dir = path.resolve(layer.dir);
+	const name = layer.name ?? index.toString();
 	const include = asArray(layer.include);
 	if (include.length <= 0) {
 		include.push("**/*");
 	}
+
 	return {
-		dir: path.resolve(layer.dir),
+		dir,
+		name,
 		include,
 		exclude: asArray(layer.exclude),
 	};
