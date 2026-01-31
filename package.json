@@ -26,6 +26,7 @@
 		"picomatch": "^4.0.3"
 	},
 	"devDependencies": {
+		"@types/archiver": "^7.0.0",
 		"@types/fs-extra": "^11.0.4",
 		"@types/node": "^24.10.9",
 		"@types/picomatch": "^4.0.2",
