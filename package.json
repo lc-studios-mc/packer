@@ -23,7 +23,8 @@
 		"consola": "^3.4.2",
 		"esbuild": "^0.27.2",
 		"fs-extra": "^11.3.3",
-		"glob": "^13.0.0"
+		"glob": "^13.0.0",
+		"picomatch": "^4.0.3"
 	},
 	"devDependencies": {
 		"@types/archiver": "^7.0.0",
