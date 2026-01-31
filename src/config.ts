@@ -70,9 +70,13 @@ const resolvePackTarget = (target: PackTarget): ResolvedPackTarget => {
 };
 
 const resolvePackLayer = (layer: PackLayer): ResolvedPackLayer => {
+	const include = asArray(layer.include);
+	if (include.length <= 0) {
+		include.push("**/*");
+	}
 	return {
 		dir: path.resolve(layer.dir),
-		include: asArray(layer.include),
+		include,
 		exclude: asArray(layer.exclude),
 	};
 };
