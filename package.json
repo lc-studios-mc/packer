@@ -22,8 +22,7 @@
 		"archiver": "^7.0.1",
 		"consola": "^3.4.2",
 		"fs-extra": "^11.3.3",
-		"glob": "^13.0.0",
-		"picomatch": "^4.0.3"
+		"glob": "^13.0.0"
 	},
 	"devDependencies": {
 		"@types/archiver": "^7.0.0",
