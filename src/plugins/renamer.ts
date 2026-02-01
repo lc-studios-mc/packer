@@ -44,7 +44,7 @@ export const createRenamerPlugin = (options: RenamerOptions): PackPlugin => ({
 			return;
 		}
 
-		throw new Error("'key' or 'patterns' must be specified in the options");
+		throw new Error("'path' or 'patterns' must be specified in the options");
 	},
 });
 
