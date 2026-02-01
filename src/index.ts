@@ -13,5 +13,4 @@ export {
 	type PackTarget,
 } from "./config";
 export { EntrySourceKind, readEntrySource, type EntrySource } from "./entry-source";
-export * as plugins from "./plugins";
 export * from "./utils";
