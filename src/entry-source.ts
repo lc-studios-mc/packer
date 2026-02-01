@@ -1,4 +1,3 @@
-import fs from "fs-extra";
 import type { ResolvedPackLayer } from "./config";
 
 export const EntrySourceKind = {
@@ -12,16 +11,3 @@ export type EntrySource =
 	| { kind: typeof EntrySourceKind.File; path: string; packLayer?: ResolvedPackLayer }
 	| { kind: typeof EntrySourceKind.Buffer; content: string | Buffer; encoding?: BufferEncoding }
 	| { kind: typeof EntrySourceKind.Object; data: object };
-
-export const readEntrySource = async (source: EntrySource): Promise<string> => {
-	switch (source.kind) {
-		case EntrySourceKind.File:
-			return fs.readFile(source.path, "utf-8");
-		case EntrySourceKind.Buffer:
-			return Buffer.isBuffer(source.content)
-				? source.content.toString(source.encoding ?? "utf-8")
-				: source.content;
-		default:
-			throw new Error(`Cannot read EntrySource of kind '${(source as any).kind}'`);
-	}
-};
