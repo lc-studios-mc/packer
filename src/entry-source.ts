@@ -22,8 +22,10 @@ export const readEntrySource = async (source: EntrySource): Promise<string> => {
 		case EntrySourceKind.File:
 			return fs.readFile(source.path, "utf-8");
 		case EntrySourceKind.Buffer:
-			return source.content.toString(source.encoding);
+			return Buffer.isBuffer(source.content)
+				? source.content.toString(source.encoding ?? "utf-8")
+				: source.content;
 		default:
-			return "";
+			throw new Error(`Cannot read EntrySource of kind '${(source as any).kind}'`);
 	}
 };
