@@ -195,12 +195,11 @@ export const buildPack = async (ctx: BuildPackContext): Promise<void> => {
 
 	ctx.logger.debug("Building pack...");
 
-	await ensureCleanOutDir(ctx);
-	await cleanTargets(ctx);
-
 	const blueprint = new Blueprint();
 	await scanLayers(ctx, blueprint);
 	await applyPlugins(ctx, blueprint);
+	await ensureCleanOutDir(ctx);
+	await cleanTargets(ctx);
 	await executeBlueprint(ctx, blueprint);
 
 	await populateTargets(ctx);
