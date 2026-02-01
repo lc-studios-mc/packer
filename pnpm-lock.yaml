@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fastify/deepmerge':
+        specifier: ^3.2.0
+        version: 3.2.0
       archiver:
         specifier: ^7.0.1
         version: 7.0.1
@@ -212,6 +215,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fastify/deepmerge@3.2.0':
+    resolution: {integrity: sha512-aO5giNgFN+rD4fMUAkro9nEL7c9gh5Q3lh0ZGKMDAhQAytf22HLicF/qZ2EYTDmH+XL2WvdazwBfOdmp6NiwBg==}
 
   '@isaacs/balanced-match@4.0.1':
     resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
@@ -1163,6 +1169,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.2':
     optional: true
+
+  '@fastify/deepmerge@3.2.0': {}
 
   '@isaacs/balanced-match@4.0.1': {}
 
