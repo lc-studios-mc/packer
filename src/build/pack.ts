@@ -135,14 +135,21 @@ const executeBlueprintEntry = async (
 	const source = sources[sources.length - 1]; // Last one wins
 	if (!source) return;
 
-	if (source.kind === EntrySourceKind.File) {
-		await fs.ensureDir(path.dirname(absDestPath));
-		await fs.copy(source.path, absDestPath);
-		return;
-	}
-
-	if (source.kind === EntrySourceKind.Buffer) {
-		await fs.outputFile(absDestPath, source.content, { encoding: source.encoding ?? "utf8" });
+	switch (source.kind) {
+		case EntrySourceKind.File:
+			await fs.ensureDir(path.dirname(absDestPath));
+			await fs.copy(source.path, absDestPath);
+			break;
+		case EntrySourceKind.Buffer:
+			await fs.outputFile(absDestPath, source.content, {
+				encoding: source.encoding ?? "utf8",
+			});
+			break;
+		default:
+			throw new Error(
+				`Cannot directly write EntrySource of kind '${source.kind}'. ` +
+					`Did you forget to include a plugin to process them?`,
+			);
 	}
 };
 
