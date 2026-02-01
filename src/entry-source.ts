@@ -11,11 +11,7 @@ export type EntrySourceKind = (typeof EntrySourceKind)[keyof typeof EntrySourceK
 export type EntrySource =
 	| { kind: typeof EntrySourceKind.File; path: string; packLayer?: ResolvedPackLayer }
 	| { kind: typeof EntrySourceKind.Buffer; content: string | Buffer; encoding?: BufferEncoding }
-	| {
-			kind: typeof EntrySourceKind.Object;
-			data: unknown;
-			meta?: { ext: string };
-	  };
+	| { kind: typeof EntrySourceKind.Object; data: object };
 
 export const readEntrySource = async (source: EntrySource): Promise<string> => {
 	switch (source.kind) {
