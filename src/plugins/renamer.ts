@@ -7,8 +7,8 @@ type PathFunction = (currentPath: path.ParsedPath) => string;
 
 export type RenamerOptions = {
 	path?: string;
-	patterns?: string[];
-	ignore?: string[];
+	patterns?: string | string[];
+	ignore?: string | string[];
 	newPath?: string | PathFunction;
 };
 
