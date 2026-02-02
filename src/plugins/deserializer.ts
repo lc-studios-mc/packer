@@ -3,7 +3,6 @@ import type { EntrySource } from "@/entry-source";
 import { getParser, type Parser } from "@/serializer";
 import { globMap } from "@/utils";
 import fs from "fs-extra";
-import { isBinaryFile } from "isbinaryfile";
 import path from "node:path";
 
 export type DeserializerOptions = {
@@ -16,30 +15,16 @@ export type DeserializerOptions = {
 
 const deserializeEntrySource = async (
 	source: EntrySource,
-	ext: string,
+	parser: Parser,
 	encoding?: BufferEncoding,
-	parsers?: Record<string, Parser>,
 ): Promise<object> => {
 	if (source.kind === "object") return source.data;
 
 	let buffer: string | Buffer;
-	let pathDisplay: string;
-
 	if (source.kind === "buffer") {
 		buffer = source.content;
-		pathDisplay = "(memory buffer)";
 	} else {
 		buffer = await fs.readFile(source.path);
-		pathDisplay = source.path;
-	}
-
-	if (await isBinaryFile(buffer)) {
-		throw new Error(`Cannot deserialize binary: ${pathDisplay}`);
-	}
-
-	const parser = getParser(ext, parsers);
-	if (parser === undefined) {
-		throw new Error(`No parser available for file type '${ext}'`);
 	}
 
 	try {
@@ -57,23 +42,25 @@ export const createDeserializerPlugin = (options: DeserializerOptions): PackPlug
 		const processEntry = async (key: string, sources: EntrySource[]): Promise<void> => {
 			if (sources.length <= 0) return;
 
-			blueprint.map.delete(key);
-			const newSources = blueprint.get(key);
 			const ext = path.extname(key);
 
+			const parser = getParser(ext, options.parsers);
+			if (parser === undefined) {
+				throw new Error(`No parser available for file type '${ext}'`);
+			}
+
+			const newSources: EntrySource[] = [];
+
 			for (const source of sources) {
-				const deserialized = await deserializeEntrySource(
-					source,
-					ext,
-					options.encoding,
-					options.parsers,
-				);
+				const deserialized = await deserializeEntrySource(source, parser, options.encoding);
 
 				newSources.push({
 					kind: "object",
 					data: deserialized,
 				});
 			}
+
+			blueprint.map.set(key, newSources);
 		};
 
 		if (options.path !== undefined) {
