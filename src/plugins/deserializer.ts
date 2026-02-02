@@ -79,6 +79,8 @@ export const createDeserializerPlugin = (options: DeserializerOptions): PackPlug
 			return;
 		}
 
-		throw new Error("'path' or 'patterns' must be specified in the options");
+		for (const [path, sources] of blueprint.map) {
+			processEntry(path, sources);
+		}
 	},
 });
