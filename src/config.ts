@@ -65,8 +65,8 @@ export type ResolvedPackTarget = {
 };
 
 export type ResolvedPackPlugin = {
-	name: string;
 	apply: PackPluginFunction;
+	name?: string;
 };
 
 export type ResolvedPackConfig = {
@@ -115,12 +115,11 @@ const resolvePackLayer = (layer: PackLayer, index: number): ResolvedPackLayer =>
 const resolvePackPlugin = (plugin: PackPlugin, index: number): ResolvedPackPlugin => {
 	if (typeof plugin === "function") {
 		return {
-			name: index.toString(),
 			apply: plugin,
 		};
 	} else {
 		return {
-			name: plugin.name ?? index.toString(),
+			name: plugin.name,
 			apply: plugin.apply,
 		};
 	}
