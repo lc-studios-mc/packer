@@ -105,22 +105,26 @@ const scanLayers = async (ctx: BuildPackContext, blueprint: Blueprint): Promise<
 };
 
 const applyPlugins = async (ctx: BuildPackContext, blueprint: Blueprint): Promise<void> => {
-	for (const plugin of ctx.packConfig.plugins) {
-		ctx.signal.throwIfAborted();
+	for (let i = 0; i < ctx.packConfig.plugins.length; i++) {
+		const plugin = ctx.packConfig.plugins[i]!;
+
+		const displayName = plugin.name === undefined ? `${i}` : `${i} - '${plugin.name}'`;
 
 		try {
+			ctx.signal.throwIfAborted();
+
 			await plugin.apply({
 				blueprint,
 				packConfig: ctx.packConfig,
 				signal: ctx.signal,
 			});
 
-			ctx.logger.debug(`Applied plugin '${plugin.name}'`);
+			ctx.logger.debug(`Applied plugin ${displayName}`);
 		} catch (error) {
 			if (isAbortError(error)) {
 				throw error;
 			} else {
-				throw new Error(`Failed to apply plugin '${plugin.name}'`, {
+				throw new Error(`Failed to apply plugin ${displayName}`, {
 					cause: error,
 				});
 			}
@@ -161,10 +165,10 @@ const executeBlueprint = async (ctx: BuildPackContext, blueprint: Blueprint): Pr
 
 		await executeBlueprintEntry(absDestPath, sources);
 
-		ctx.logger.debug(`Executed ${relativeDestPath}`);
+		ctx.logger.debug(`Executed entry: ${relativeDestPath}`);
 	}
 
-	ctx.logger.debug(`Executed ${blueprint.map.size} blueprint entries`);
+	ctx.logger.debug(`Executed total ${blueprint.map.size} blueprint entries`);
 };
 
 const populateTargets = async (ctx: BuildPackContext): Promise<void> => {
