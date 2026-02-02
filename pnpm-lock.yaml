@@ -26,9 +26,6 @@ importers:
       glob:
         specifier: ^13.0.0
         version: 13.0.0
-      isbinaryfile:
-        specifier: ^6.0.0
-        version: 6.0.0
       picomatch:
         specifier: ^4.0.3
         version: 4.0.3
@@ -678,10 +675,6 @@ packages:
 
   isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
-
-  isbinaryfile@6.0.0:
-    resolution: {integrity: sha512-2FN2B8MAqKv6d5TaKsLvMrwMcghxwHTpcKy0L5mhNbRqjNqo2++SpCqN6eG1lCC1GmTQgvrYJYXv2+Chvyevag==}
-    engines: {node: '>= 24.0.0'}
 
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
@@ -1580,8 +1573,6 @@ snapshots:
   is-stream@2.0.1: {}
 
   isarray@1.0.0: {}
-
-  isbinaryfile@6.0.0: {}
 
   isexe@2.0.0: {}
 
