@@ -54,15 +54,6 @@ const cleanTargets = async (ctx: BuildPackContext): Promise<void> => {
 
 			return;
 		}
-
-		if (target.mode === PackTargetMode.Copy) {
-			if (!stats.isDirectory()) {
-				throw new Error(`Delete ${target.dest} and try again`);
-			}
-
-			await fs.rm(target.dest, { recursive: true });
-			ctx.logger.debug(`Deleted existing target (copy) at ${target.dest}`);
-		}
 	});
 
 	await Promise.all(promises);
@@ -183,11 +174,6 @@ const populateTargets = async (ctx: BuildPackContext): Promise<void> => {
 			await fs.symlink(ctx.packConfig.outDir, target.dest, "junction");
 			ctx.logger.debug(`Created a link at target: ${target.dest}`);
 			return;
-		}
-
-		if (target.mode === PackTargetMode.Copy) {
-			await fs.copy(ctx.packConfig.outDir, target.dest);
-			ctx.logger.debug(`Copied output to target: ${target.dest}`);
 		}
 	});
 
