@@ -20,7 +20,7 @@ export type PackTarget =
 	| string
 	| {
 			dest: string;
-			/** @default "link" */
+			/** @default "sync" */
 			mode?: PackTargetMode;
 	  };
 
@@ -86,12 +86,12 @@ const resolvePackTarget = (target: PackTarget): ResolvedPackTarget => {
 	if (typeof target === "string") {
 		return {
 			dest: path.resolve(target),
-			mode: "link",
+			mode: "sync",
 		};
 	} else {
 		return {
 			dest: path.resolve(target.dest),
-			mode: target.mode ?? "link",
+			mode: target.mode ?? "sync",
 		};
 	}
 };
