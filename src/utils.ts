@@ -29,18 +29,6 @@ export const resolveWslPath = (linuxPath: string): string => {
 	}
 };
 
-export const getEnv = (key: string): string | undefined => process.env[key];
-
-export const getEnvWithFallback = (key: string, fallback: string): string =>
-	process.env[key] ?? fallback;
-
-export const getEnvRequired = (key: string, customErrorMsg?: string): string => {
-	const value = process.env[key];
-	if (typeof value !== "string")
-		throw new Error(customErrorMsg ?? `The environment variable '${key}' is required but not set`);
-	return value;
-};
-
 export const parseVersionString = (versionString: string): number[] => {
 	const parts = versionString.split(".");
 	if (parts.length !== 3) {
