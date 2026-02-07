@@ -1,3 +1,4 @@
+import { ExecaError, execaSync } from "execa";
 import os from "node:os";
 import path from "node:path";
 import picomatch from "picomatch";
@@ -17,6 +18,16 @@ export const asArray = <T>(input: T | T[] | undefined | null): T[] => {
 export const isWsl = (): boolean => {
 	const release = os.release().toLowerCase();
 	return release.includes("microsoft") || release.includes("wsl");
+};
+
+export const resolveWslPath = (linuxPath: string): string => {
+	try {
+		const winPath = execaSync("wslpath", ["-w", "-a", linuxPath]).stdout;
+		return winPath;
+	} catch (error) {
+		const stderr = (error as ExecaError).stderr || "Unknown error";
+		throw new Error(`Could not resolve WSL path: ${stderr}`, { cause: error });
+	}
 };
 
 export const isFileUrl = (value: string): boolean => {
