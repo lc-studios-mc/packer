@@ -29,15 +29,6 @@ export const resolveWslPath = (linuxPath: string): string => {
 	}
 };
 
-export const isFileUrl = (value: string): boolean => {
-	try {
-		const url = new URL(value);
-		return url.protocol === "file:";
-	} catch (e) {
-		return false; // Not a valid URL at all, so not a file URL
-	}
-};
-
 export const getEnv = (key: string): string | undefined => process.env[key];
 
 export const getEnvWithFallback = (key: string, fallback: string): string =>
