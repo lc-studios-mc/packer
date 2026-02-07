@@ -7,6 +7,7 @@ import fs from "fs-extra";
 import { glob } from "glob";
 import path from "node:path";
 import type { BuildExecutionContext } from "./execution";
+import { syncDirectory } from "./sync";
 
 export type BuildPackContext = {
 	packConfig: ResolvedPackConfig;
@@ -174,6 +175,16 @@ const populateTargets = async (ctx: BuildPackContext): Promise<void> => {
 			await fs.symlink(ctx.packConfig.outDir, target.dest, "junction");
 			ctx.logger.debug(`Created a link at target: ${target.dest}`);
 			return;
+		}
+
+		if (target.mode === PackTargetMode.Sync) {
+			try {
+				await fs.ensureDir(target.dest);
+				await syncDirectory(ctx.packConfig.outDir, target.dest);
+				ctx.logger.debug(`Synced outDir to target: ${target.dest}`);
+			} catch (error) {
+				throw new Error("Failed to sync outDir to target", { cause: error });
+			}
 		}
 	});
 
