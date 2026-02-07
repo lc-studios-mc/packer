@@ -12,6 +12,7 @@ export type PackLayer = {
 
 export const PackTargetMode = {
 	Link: "link",
+	Sync: "sync",
 } as const;
 export type PackTargetMode = (typeof PackTargetMode)[keyof typeof PackTargetMode];
 
