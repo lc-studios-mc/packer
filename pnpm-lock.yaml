@@ -36,9 +36,6 @@ importers:
       '@types/node':
         specifier: ^24.10.9
         version: 24.10.9
-      '@types/picomatch':
-        specifier: ^4.0.2
-        version: 4.0.2
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -425,9 +422,6 @@ packages:
 
   '@types/node@24.10.9':
     resolution: {integrity: sha512-ne4A0IpG3+2ETuREInjPNhUGis1SFjv1d5asp8MzEAGtOZeTeHVDOYqOgqfhvseqg/iXty2hjBf1zAOb7RNiNw==}
-
-  '@types/picomatch@4.0.2':
-    resolution: {integrity: sha512-qHHxQ+P9PysNEGbALT8f8YOSHW0KJu6l2xU8DYY0fu/EmGxXdVnuTLvFUvBgPJMSqXq29SYHveejeAha+4AYgA==}
 
   '@types/readdir-glob@1.1.5':
     resolution: {integrity: sha512-raiuEPUYqXu+nvtY2Pe8s8FEmZ3x5yAH4VkLdihcPdalvsHltomrRC9BzuStrJ9yk06470hS0Crw0f1pXqD+Hg==}
@@ -1559,8 +1553,6 @@ snapshots:
   '@types/node@24.10.9':
     dependencies:
       undici-types: 7.16.0
-
-  '@types/picomatch@4.0.2': {}
 
   '@types/readdir-glob@1.1.5':
     dependencies:
