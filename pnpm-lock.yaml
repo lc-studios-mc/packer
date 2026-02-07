@@ -23,9 +23,6 @@ importers:
       glob:
         specifier: ^13.0.0
         version: 13.0.0
-      picomatch:
-        specifier: ^4.0.3
-        version: 4.0.3
     devDependencies:
       '@types/archiver':
         specifier: ^7.0.0
