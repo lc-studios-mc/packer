@@ -167,8 +167,6 @@ const populateTargets = async (ctx: BuildPackContext): Promise<void> => {
 	ctx.signal.throwIfAborted();
 
 	const promises = ctx.packConfig.targets.map(async (target) => {
-		if (await fs.pathExists(target.dest)) return;
-
 		await fs.ensureDir(path.dirname(target.dest));
 
 		if (target.mode === PackTargetMode.Link) {
@@ -179,7 +177,6 @@ const populateTargets = async (ctx: BuildPackContext): Promise<void> => {
 
 		if (target.mode === PackTargetMode.Sync) {
 			try {
-				await fs.ensureDir(target.dest);
 				await syncDirectory(ctx.packConfig.outDir, target.dest);
 				ctx.logger.debug(`Synced outDir to target: ${target.dest}`);
 			} catch (error) {
