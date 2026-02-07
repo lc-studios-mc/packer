@@ -28,22 +28,3 @@ export const resolveWslPath = (linuxPath: string): string => {
 		throw new Error(`Could not resolve WSL path: ${stderr}`, { cause: error });
 	}
 };
-
-export const parseVersionString = (versionString: string): number[] => {
-	const parts = versionString.split(".");
-	if (parts.length !== 3) {
-		throw new Error(
-			'The string must contain exactly three integer parts separated by dots (e.g., "1.2.3")',
-		);
-	}
-
-	const numbers = parts.map((part) => {
-		const num = Number(part);
-		if (part.trim() === "" || !Number.isInteger(num)) {
-			throw new Error(`The segment "${part}" is not a valid integer`);
-		}
-		return num;
-	});
-
-	return numbers;
-};
