@@ -1,3 +1,4 @@
+import os from "node:os";
 import path from "node:path";
 import picomatch from "picomatch";
 
@@ -11,6 +12,11 @@ export const asArray = <T>(input: T | T[] | undefined | null): T[] => {
 	if (input === undefined || input === null) return [];
 	if (Array.isArray(input)) return input;
 	return [input] as T[];
+};
+
+export const isWsl = (): boolean => {
+	const release = os.release().toLowerCase();
+	return release.includes("microsoft") || release.includes("wsl");
 };
 
 export const isFileUrl = (value: string): boolean => {
