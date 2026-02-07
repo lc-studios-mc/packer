@@ -1,7 +1,6 @@
 import { ExecaError, execaSync } from "execa";
 import os from "node:os";
 import path from "node:path";
-import picomatch from "picomatch";
 
 export const toPosixPath = (p: string) => p.split(path.sep).join("/");
 
@@ -37,23 +36,6 @@ export const isFileUrl = (value: string): boolean => {
 	} catch (e) {
 		return false; // Not a valid URL at all, so not a file URL
 	}
-};
-
-export const globMap = <V>(
-	map: Map<string, V>,
-	glob: string | string[],
-	options?: picomatch.PicomatchOptions,
-): Map<string, V> => {
-	const matches = new Map<string, V>();
-	const isMatch = picomatch(glob, options);
-
-	for (const key of map.keys()) {
-		if (isMatch(key)) {
-			matches.set(key, map.get(key)!);
-		}
-	}
-
-	return matches;
 };
 
 export const getEnv = (key: string): string | undefined => process.env[key];
