@@ -23,7 +23,6 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"consola": "^3.4.2",
 		"fast-glob": "^3.3.3"
 	},
 	"devDependencies": {
