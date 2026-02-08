@@ -24,8 +24,7 @@
 	},
 	"dependencies": {
 		"archiver": "^7.0.1",
-		"consola": "^3.4.2",
-		"fs-extra": "^11.3.3"
+		"consola": "^3.4.2"
 	},
 	"devDependencies": {
 		"@types/archiver": "^7.0.0",
