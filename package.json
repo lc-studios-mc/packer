@@ -24,7 +24,8 @@
 	},
 	"dependencies": {
 		"archiver": "^7.0.1",
-		"consola": "^3.4.2"
+		"consola": "^3.4.2",
+		"fast-glob": "^3.3.3"
 	},
 	"devDependencies": {
 		"@types/archiver": "^7.0.0",
